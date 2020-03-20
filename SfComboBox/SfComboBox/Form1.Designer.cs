@@ -39,6 +39,7 @@
             this.sfComboBox.Size = new System.Drawing.Size(196, 36);
             this.sfComboBox.TabIndex = 0;
             this.sfComboBox.AllowSelectAll = true;
+            this.sfComboBox.DisplayMember = "Name";
             this.sfComboBox.DataSource = this.GetData();
             this.sfComboBox.ComboBoxMode = Syncfusion.WinForms.ListView.Enums.ComboBoxMode.MultiSelection;
             this.sfComboBox.DropDownListView.DrawItem += DropDownListView_DrawItem;

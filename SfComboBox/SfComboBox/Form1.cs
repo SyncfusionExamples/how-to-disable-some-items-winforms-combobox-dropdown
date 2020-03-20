@@ -1,12 +1,7 @@
-﻿using Syncfusion.WinForms.ListView;
+﻿using Syncfusion.WinForms.ListView.Enums;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SfComboBox
@@ -22,17 +17,20 @@ namespace SfComboBox
 
         private void DropDownListView_SelectionChanged(object sender, Syncfusion.WinForms.ListView.Events.ItemSelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count == this.sfComboBox.DropDownListView.View.Items.Count())
+            if (e.AddedItems.Count == this.sfComboBox.DropDownListView.View.Items.Count)
             {
-                foreach (var value in disableItems)
-                    this.sfComboBox.DropDownListView.CheckedItems.Remove(value);
+                for (int i = 0; i < this.sfComboBox.DropDownListView.CheckedItems.Count; i++)
+                {
+                    if ((this.sfComboBox.DropDownListView.CheckedItems[i] as Details).IsEnabled == false)
+                        this.sfComboBox.DropDownListView.CheckedItems.RemoveAt(i);
+                }
             }
         }
 
         private void DropDownListView_ItemChecking(object sender, Syncfusion.WinForms.ListView.Events.ItemCheckingEventArgs e)
         {
-            bool isDisabledItem = disableItems.Contains(e.ItemData);
-            if ((this.sfComboBox.AllowSelectAll == false && isDisabledItem) || (e.ItemIndex != 0 && isDisabledItem))
+            bool isItemEnable = (this.sfComboBox.ComboBoxMode == ComboBoxMode.MultiSelection && this.sfComboBox.AllowSelectAll && e.ItemIndex == 0) ? true : (e.ItemData as Details).IsEnabled;
+            if (!isItemEnable)
             {
                 e.Cancel = true;
             }
@@ -40,14 +38,14 @@ namespace SfComboBox
 
         private void DropDownListView_SelectionChanging(object sender, Syncfusion.WinForms.ListView.Events.ItemSelectionChangingEventArgs e)
         {
-            if (this.disableItems.Contains(e.AddedItems[0]))
+            if (e.AddedItems.Count > 0 && !(e.AddedItems[0] as Details).IsEnabled && e.AddedItems.Count != this.sfComboBox.DropDownListView.View.Items.Count )
                 e.Cancel = true;
         }
 
         private void DropDownListView_DrawItem(object sender, Syncfusion.WinForms.ListView.Events.DrawItemEventArgs e)
         {
-            bool isDisabledItem = disableItems.Contains(e.ItemData);
-            if ((this.sfComboBox.AllowSelectAll == false && isDisabledItem) || (e.ItemIndex != 0 && isDisabledItem))
+            bool isItemEnable = (this.sfComboBox.ComboBoxMode == ComboBoxMode.MultiSelection && this.sfComboBox.AllowSelectAll && e.ItemIndex == 0) ? true : (e.ItemData as Details).IsEnabled;
+            if (!isItemEnable)
             {
                 e.Style.BackColor = Color.LightGray;
                 e.Style.ForeColor = Color.Gray;
@@ -58,21 +56,26 @@ namespace SfComboBox
 
         #region Data Setting 
 
-        List<string> disableItems = new List<string>() { "Asif" };
-
-        public List<string> GetData()
+        public class Details
         {
-            List<string> list = new List<string>();
-            list.Add("Amir");
-            list.Add("Asif");
-            list.Add("Catherine");
-            list.Add("Cindrella");
-            list.Add("David");
-            list.Add("Ellis");
-            list.Add("Farooq");
-            list.Add("Muhammad");
-            list.Add("Saleem");
-            list.Add("Usman");
+            public string Name { get; set; }
+
+            public bool IsEnabled { get; set; } = true;
+        }
+
+        public List<Details> GetData()
+        {
+            List<Details> list = new List<Details>();
+            list.Add(new Details { Name = "Amir", IsEnabled = false });
+            list.Add(new Details { Name = "Asif" });
+            list.Add(new Details { Name = "Catherine" });
+            list.Add(new Details { Name = "Cindrella" });
+            list.Add(new Details { Name = "David", IsEnabled = false });
+            list.Add(new Details { Name = "Ellis" });
+            list.Add(new Details { Name = "Farooq" });
+            list.Add(new Details { Name = "Muhammad" });
+            list.Add(new Details { Name = "Saleem" });
+            list.Add(new Details { Name = "Usman" });
             return list;
         }
 
