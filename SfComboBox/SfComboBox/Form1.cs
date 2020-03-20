@@ -31,9 +31,7 @@ namespace SfComboBox
         {
             bool isItemEnable = (this.sfComboBox.ComboBoxMode == ComboBoxMode.MultiSelection && this.sfComboBox.AllowSelectAll && e.ItemIndex == 0) ? true : (e.ItemData as Details).IsEnabled;
             if (!isItemEnable)
-            {
                 e.Cancel = true;
-            }
         }
 
         private void DropDownListView_SelectionChanging(object sender, Syncfusion.WinForms.ListView.Events.ItemSelectionChangingEventArgs e)
