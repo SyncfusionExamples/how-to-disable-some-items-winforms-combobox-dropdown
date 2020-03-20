@@ -28,40 +28,40 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.sfComboBox1 = new Syncfusion.WinForms.ListView.SfComboBox();
-            ((System.ComponentModel.ISupportInitialize)(this.sfComboBox1)).BeginInit();
+            this.sfComboBox = new Syncfusion.WinForms.ListView.SfComboBox();
+            ((System.ComponentModel.ISupportInitialize)(this.sfComboBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // sfComboBox1
+            // sfComboBox
             // 
-            this.sfComboBox1.Location = new System.Drawing.Point(292, 94);
-            this.sfComboBox1.Name = "sfComboBox1";
-            this.sfComboBox1.Size = new System.Drawing.Size(196, 36);
-            this.sfComboBox1.TabIndex = 0;
-            this.sfComboBox1.AllowSelectAll = true;
-            this.sfComboBox1.DisplayMember = "Name";
-            this.sfComboBox1.DataSource = this.GetData();
-            this.sfComboBox1.ComboBoxMode = Syncfusion.WinForms.ListView.Enums.ComboBoxMode.MultiSelection;
-            this.sfComboBox1.DropDownListView.DrawItem += DropDownListView_DrawItem;
-            this.sfComboBox1.DropDownListView.ItemChecking += DropDownListView_ItemChecking;
-            this.sfComboBox1.DropDownListView.SelectionChanged += DropDownListView_SelectionChanged;
+            this.sfComboBox.Location = new System.Drawing.Point(292, 94);
+            this.sfComboBox.Name = "sfComboBox";
+            this.sfComboBox.Size = new System.Drawing.Size(196, 36);
+            this.sfComboBox.TabIndex = 0;
+            this.sfComboBox.AllowSelectAll = true;
+            this.sfComboBox.DataSource = this.GetData();
+            this.sfComboBox.ComboBoxMode = Syncfusion.WinForms.ListView.Enums.ComboBoxMode.MultiSelection;
+            this.sfComboBox.DropDownListView.DrawItem += DropDownListView_DrawItem;
+            this.sfComboBox.DropDownListView.ItemChecking += DropDownListView_ItemChecking;
+            this.sfComboBox.DropDownListView.SelectionChanged += DropDownListView_SelectionChanged;
+            this.sfComboBox.DropDownListView.SelectionChanging += DropDownListView_SelectionChanging;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.sfComboBox1);
+            this.Controls.Add(this.sfComboBox);
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.sfComboBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sfComboBox)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Syncfusion.WinForms.ListView.SfComboBox sfComboBox1;
+        private Syncfusion.WinForms.ListView.SfComboBox sfComboBox;
     }
 }
 

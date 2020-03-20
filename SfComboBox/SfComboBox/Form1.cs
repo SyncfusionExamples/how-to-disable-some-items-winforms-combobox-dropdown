@@ -20,27 +20,34 @@ namespace SfComboBox
 
         #region Events
 
-        int disableItemIndex = 1;
-
         private void DropDownListView_SelectionChanged(object sender, Syncfusion.WinForms.ListView.Events.ItemSelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count == this.sfComboBox1.DropDownListView.View.Items.Count())
+            if (e.AddedItems.Count == this.sfComboBox.DropDownListView.View.Items.Count())
             {
-                 this.sfComboBox1.DropDownListView.CheckedItems.RemoveAt(disableItemIndex - 1);
+                foreach (var value in disableItems)
+                    this.sfComboBox.DropDownListView.CheckedItems.Remove(value);
             }
         }
 
         private void DropDownListView_ItemChecking(object sender, Syncfusion.WinForms.ListView.Events.ItemCheckingEventArgs e)
         {
-            if(e.ItemIndex == disableItemIndex)
+            bool isDisabledItem = disableItems.Contains(e.ItemData);
+            if ((this.sfComboBox.AllowSelectAll == false && isDisabledItem) || (e.ItemIndex != 0 && isDisabledItem))
             {
                 e.Cancel = true;
             }
         }
 
+        private void DropDownListView_SelectionChanging(object sender, Syncfusion.WinForms.ListView.Events.ItemSelectionChangingEventArgs e)
+        {
+            if (this.disableItems.Contains(e.AddedItems[0]))
+                e.Cancel = true;
+        }
+
         private void DropDownListView_DrawItem(object sender, Syncfusion.WinForms.ListView.Events.DrawItemEventArgs e)
         {
-            if (e.ItemIndex == disableItemIndex)
+            bool isDisabledItem = disableItems.Contains(e.ItemData);
+            if ((this.sfComboBox.AllowSelectAll == false && isDisabledItem) || (e.ItemIndex != 0 && isDisabledItem))
             {
                 e.Style.BackColor = Color.LightGray;
                 e.Style.ForeColor = Color.Gray;
@@ -51,24 +58,21 @@ namespace SfComboBox
 
         #region Data Setting 
 
-        public class Details
-        {
-            public string Name { get; set; }
-        }
+        List<string> disableItems = new List<string>() { "Asif" };
 
-        public List<Details> GetData()
+        public List<string> GetData()
         {
-            List<Details> list = new List<Details>();
-            list.Add(new Details() { Name = "Amir"});
-            list.Add(new Details() { Name = "Asif"});
-            list.Add(new Details() { Name = "Catherine"});
-            list.Add(new Details() { Name = "Cindrella"});
-            list.Add(new Details() { Name = "David"});
-            list.Add(new Details() { Name = "Ellis"});
-            list.Add(new Details() { Name = "Farooq"});
-            list.Add(new Details() { Name = "Muhammad"});
-            list.Add(new Details() { Name = "Saleem"});
-            list.Add(new Details() { Name = "Usman"});
+            List<string> list = new List<string>();
+            list.Add("Amir");
+            list.Add("Asif");
+            list.Add("Catherine");
+            list.Add("Cindrella");
+            list.Add("David");
+            list.Add("Ellis");
+            list.Add("Farooq");
+            list.Add("Muhammad");
+            list.Add("Saleem");
+            list.Add("Usman");
             return list;
         }
 
