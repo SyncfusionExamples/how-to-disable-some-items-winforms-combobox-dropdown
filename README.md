@@ -4,9 +4,7 @@ This example demonstrates how to disable some items from a winforms combobox dro
 ## Changing forecolor for disabled items in dropdown
 You can change the forecolor for disabled items by handling [SfComboBox.DropDownListView.DrawItem]((https://help.syncfusion.com/cr/windowsforms/Syncfusion.WinForms.ListView.SfListView.html)) event to show the items is disabled.
 
-{% tabs %}
-
-{% highlight C# %}
+# C#
 
 sfComboBox.DropDownListView.DrawItem += DropDownListView_DrawItem;
  
@@ -19,8 +17,6 @@ private void DropDownListView_DrawItem(object sender, Syncfusion.WinForms.ListVi
         e.Style.ForeColor = Color.Gray;
     }
 }
-
-{% endhighlight %}
 
 ## Handling selection for disabled items in dropdown
 Selection of disabled items in multi selection mode handled using [SfComboBox.DropDownListView.SelectionChanged](https://help.syncfusion.com/cr/windowsforms/Syncfusion.WinForms.ListView.SfListView.html) and [SfComboBox.DropDownListView.ItemChecking event](https://help.syncfusion.com/cr/windowsforms/Syncfusion.WinForms.ListView.SfListView.html). In single selection mode, selection is handled using [SfComboBox.DropDownListView.SelectionChanging event](https://help.syncfusion.com/cr/windowsforms/Syncfusion.WinForms.ListView.SfListView.html).
