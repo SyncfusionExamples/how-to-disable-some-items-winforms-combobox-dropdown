@@ -1,5 +1,5 @@
-# how-to-disable-some-items-winforms-combobox-dropdown
-This example demonstrates how to disable some items from a winforms combobox dropdown. For more details please refer [how to disable some items from winforms combobox dropdown](https://www.syncfusion.com/kb/11254/how-to-disable-some-items-winforms-combobox-dropdown).
+# how-to-disable-items-winforms-combobox-dropdown
+This example demonstrates how to disable items from a winforms combobox dropdown. For more details please refer [how to disable items from winforms combobox dropdown](https://www.syncfusion.com/kb/11254/how-to-disable-some-items-winforms-combobox-dropdown).
 
 ## Changing forecolor for disabled items in dropdown
 You can change the forecolor for disabled items by handling SfComboBox.DropDownListView.DrawItem event to show the items is disabled.
