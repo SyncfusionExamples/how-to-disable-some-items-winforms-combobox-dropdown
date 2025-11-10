@@ -1,52 +1,71 @@
-# how-to-disable-items-winforms-combobox-dropdown
-This example demonstrates how to disable items from a winforms combobox dropdown. For more details please refer [how to disable items from winforms combobox dropdown](https://www.syncfusion.com/kb/11254/how-to-disable-some-items-winforms-combobox-dropdown).
+# How to Disable Items in WinForms ComboBox Dropdown
+## Overview
+This example demonstrates how to disable specific items in a WinForms ComboBox dropdown using Syncfusion's SfComboBox control. This is useful when you want to prevent users from selecting certain items based on business logic or application state.
 
-## Changing forecolor for disabled items in dropdown
-You can change the forecolor for disabled items by handling SfComboBox.DropDownListView.DrawItem event to show the items is disabled.
+## Changing ForeColor for Disabled Items
+You can visually indicate disabled items by customizing their appearance using the DrawItem event of DropDownListView.
+### C# Example
+```C#
+sfComboBox.DropDownListView.DrawItem += DropDownListView_DrawItem;
 
-# C#
+private void DropDownListView_DrawItem(object sender, Syncfusion.WinForms.ListView.Events.DrawItemEventArgs e)
+{
+    bool isItemEnable = (sfComboBox.ComboBoxMode == ComboBoxMode.MultiSelection &&
+                         sfComboBox.AllowSelectAll &&
+                         e.ItemIndex == 0)
+                         ? true
+                         : (e.ItemData as Details).IsEnabled;
 
-    sfComboBox.DropDownListView.DrawItem += DropDownListView_DrawItem;
- 
-    private void DropDownListView_DrawItem(object sender, Syncfusion.WinForms.ListView.Events.DrawItemEventArgs e)
+    if (!isItemEnable)
+    {
+        e.Style.BackColor = Color.LightGray;
+        e.Style.ForeColor = Color.Gray;
+    }
+}
+```
+
+## Handling Selection for Disabled Items
+Selection logic differs based on whether the ComboBox is in multi-selection or single-selection mode.
+### Multi-Selection Mode:
+```C#
+private void DropDownListView_SelectionChanged(object sender, ItemSelectionChangedEventArgs e)
+{
+    if (e.AddedItems.Count == sfComboBox.DropDownListView.View.Items.Count)
+    {
+        for (int i = 0; i < sfComboBox.DropDownListView.CheckedItems.Count; i++)
         {
-            bool isItemEnable = (this.sfComboBox.ComboBoxMode == ComboBoxMode.MultiSelection && this.sfComboBox.AllowSelectAll && e.ItemIndex == 0) ? true : (e.ItemData as Details).IsEnabled;
-        if (!isItemEnable)
-        {
-             e.Style.BackColor = Color.LightGray;
-             e.Style.ForeColor = Color.Gray;
+            if (!(sfComboBox.DropDownListView.CheckedItems[i] as Details).IsEnabled)
+                sfComboBox.DropDownListView.CheckedItems.RemoveAt(i);
         }
     }
+}
 
-## Handling selection for disabled items in dropdown
-Selection of disabled items in multi selection mode handled using SfComboBox.DropDownListView.SelectionChanged and SfComboBox.DropDownListView.ItemChecking event. In single selection mode, selection is handled using SfComboBox.DropDownListView.SelectionChanging event.
+private void DropDownListView_ItemChecking(object sender, ItemCheckingEventArgs e)
+{
+    bool isItemEnable = (sfComboBox.ComboBoxMode == ComboBoxMode.MultiSelection &&
+                         sfComboBox.AllowSelectAll &&
+                         e.ItemIndex == 0)
+                         ? true
+                         : (e.ItemData as Details).IsEnabled;
 
-# C#
-
-    private void DropDownListView_SelectionChanged(object sender, Syncfusion.WinForms.ListView.Events.ItemSelectionChangedEventArgs e)
-        {
-            if (e.AddedItems.Count == this.sfComboBox.DropDownListView.View.Items.Count)S
-            {
-                for (int i = 0; i < this.sfComboBox.DropDownListView.CheckedItems.Count; i++)
-                {
-                    if ((this.sfComboBox.DropDownListView.CheckedItems[i] as Details).IsEnabled == false)
-                    this.sfComboBox.DropDownListView.CheckedItems.RemoveAt(i);
-                }   
-            }
-        }
- 
-    private void DropDownListView_ItemChecking(object sender, Syncfusion.WinForms.ListView.Events.ItemCheckingEventArgs e)
+    if (!isItemEnable)
+        e.Cancel = true;
+}
+```
+### Single-Selection Mode
+```C#
+private void DropDownListView_SelectionChanging(object sender, ItemSelectionChangingEventArgs e)
+{
+    if (e.AddedItems.Count > 0 &&
+        !(e.AddedItems[0] as Details).IsEnabled &&
+        e.AddedItems.Count != sfComboBox.DropDownListView.View.Items.Count)
     {
-        bool isItemEnable = (this.sfComboBox.ComboBoxMode == ComboBoxMode.MultiSelection && this.sfComboBox.AllowSelectAll && e.ItemIndex == 0) ? true : (e.ItemData as Details).IsEnabled;
-        if (!isItemEnable)
         e.Cancel = true;
     }
- 
-    private void DropDownListView_SelectionChanging(object sender, Syncfusion.WinForms.ListView.Events.ItemSelectionChangingEventArgs e)
-    {
-        if (e.AddedItems.Count > 0 && !(e.AddedItems[0] as Details).IsEnabled && e.AddedItems.Count != this.sfComboBox.DropDownListView.View.Items.Count)
-        e.Cancel = true;
-    }    
+}
+```
+## Reference
+For detailed guidance and step-by-step instructions, refer to the official Syncfusion Knowledge Base article: https://www.syncfusion.com/kb/11254/how-to-disable-some-items-winforms-combobox-dropdown
 
+## Screenshot
 ![Disable items in ComboBox](SfComboBox/SfComboBox/ComboBox%20Images/Disable%20some%20items%20in%20ComboBox.png)
-
